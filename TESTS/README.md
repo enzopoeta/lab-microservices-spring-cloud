@@ -54,9 +54,9 @@ Rode os projetos service-a-v1,service-a-v2,service-b e verifique se os mesmos es
 
 A idéia aqui é subir mais de uma instância do serviço **A** (que no nosso caso retornam propriedades diferentes de maneira proposital) e verificar nas chamadas ao serviço **C** que as duas instâncias são chamadas devido ao balanceamento de carga provido pelo Ribbon em conjunto com o Eureka. Para este teste é necessário subir os serviços dos projetos service-a-v1,service-a-v2,service-b e service-c-v1 para ficarmos com o ambiente conforme diagrama abaixo :
 
-<p align="center">
-![diagrama_servicos](https://raw.githubusercontent.com/enzopoeta/lab-microservices-spring-cloud/master/TESTS/service-ribbon.png)
-</p>
+
+![diagrama_servicos](./service-ribbon.png)
+
 
 Repare que se chamarmos no navegador o serviço **C** várias vezes a saída correspondente ao serviço **A** muda, o que nos indica que a instância de **A** chamada também está mudando. Se removermos uma das instâncias de **A** nosso sistema ainda estará funcionando e as chamadas do serviço **C** irão refletir tal fato. Se removermos todas as instâncias de **A** ou a única instância de **B** o serviço **C** deixará de funcionar.A invocação dos serviços pelo serviço C está sendo feita via Rest Template do Spring.
 
@@ -65,9 +65,9 @@ Repare que se chamarmos no navegador o serviço **C** várias vezes a saída cor
 Neste teste vamos rodar uma versão mais resiliente do serviço **C** para isso além dos serviços constantes nos projetos service-a-v1,service-a-v2,service-b precisamos rodar também a versão 2 do serviço **C** (service-c-v2). Com tudo no ar teremos a situação conforme o diagrama abaixo :
 
 
-<p align="center">
-![diagrama_servicos](https://raw.githubusercontent.com/enzopoeta/lab-microservices-spring-cloud/master/TESTS/service-circuitbreaker.png)
-</p>
+
+![diagrama_servicos](./service-circuitbreaker.png)
+
 
 Neste caso podemos  repetir todos os experimentos que fizemos no item anterior... A diferença é que se removermos todas as instâncias do serviço **A** ou do serviço **B** O serviço C não deixará de funcionar por conta do Hystrix (nosso circuit breaker) que obriga o serviço **C** a realizar uma chamada de fallback na ausência de qualquer dos outros serviços. O interessante é que ao subirmos os serviços depencencias novamente depois de alguns momentos o Hystrix irá restaurar o funcionamento normal do serviço **C**. Essa feature permite que desenvolvamos aplicações extremamente resilientes. Também é possível observar no código do projeto service-c-v2 que as chamadas aos serviços **A**  e **B** estão sendo feitas pelo Spring Cloud Feign.
 
