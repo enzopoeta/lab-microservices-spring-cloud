@@ -36,9 +36,9 @@ se service discovery.
 
 Os serviços desenvolvidos e seus relacionamentos podem ser representados conforme a figura abaixo :
 
-<p align="center">
+
 ![diagrama_servicos](./services.png)
-</p>
+
 
 Os microserviços **A** e **B** contém serviços rest que expõe propriedades específicas advindas do Spring Cloud Config, enquando que o serviço **C** condensa e expoõe o resultado das chamadas de **A** e **B**. (alguns destes serviços tem diferentes versões, o que será explicado mais adiante).
 
